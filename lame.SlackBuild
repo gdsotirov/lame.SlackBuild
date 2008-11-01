@@ -7,12 +7,15 @@
 . ../slack-package.conf
 
 NAME=lame
-VERSION=3.97
+VERSION=3.98.2
+VER_MAJ=3
+VER_MIN=98
+VER_PAT=2
 BUILD=1
 
 cd $TMP
-tar -zxvf $CWD/$NAME-$VERSION.tar.gz
-SRC=$TMP/$NAME-$VERSION
+tar -zxvf $CWD/$NAME-${VER_MAJ}${VER_MIN}-${VER_PAT}.tar.gz
+SRC=$TMP/$NAME-${VER_MAJ}${VER_MIN}-${VER_PAT}
 cd $SRC
 fix_source
 
@@ -26,14 +29,14 @@ CXXFLAGS=$SLKCFLAGS \
             --localstatedir=/var \
             --mandir=/usr/man \
             --enable-shared=yes \
-            --enable-static=no
+            --enable-static=no || exit 1
 
-make || exit 1 
+make -j4 || exit 2 
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make DESTDIR=$PKG install
+make DESTDIR=$PKG install || exit 3
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
