@@ -1,1 +1,2 @@
+glibc-solibs >= 2.7
 ncurses >= 5.6
