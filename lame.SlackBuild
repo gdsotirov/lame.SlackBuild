@@ -1,13 +1,29 @@
 #!/bin/sh
 #
-# SlackBuild for LAME
-# Written by Georgi D. Sotirov <gdsotirov@dir.bg>
+# Slackware build script for LAME
+# Copyright (C) 2007,2008,2010,2012 Georgi D. Sotirov <gdsotirov@dir.bg>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# 
+# $Id: lame.SlackBuild,v 1.5 2012/02/19 08:48:10 gsotirov Exp $
 #
 
-. ../slack-package.conf
+. ../../slack-package.conf
 
 NAME=lame
-VERSION=3.98.4
+VERSION=3.99.4
 ARCH=${ARCH:-i486}
 BUILD=${BUILD:-1}
 
@@ -33,7 +49,7 @@ mkdir -p $PKG
 
 # Extract and fix source
 cd $TMP
-tar -xvf $CWD/$NAME-$VERSION.tar.gz
+tar -xvf $CWD/$NAME-$VERSION.tar.?z* || exit 3
 cd $SRC
 fix_source
 
@@ -45,13 +61,14 @@ CXXFLAGS=$SLKCFLAGS \
             --prefix=/usr \
             --sysconfdir=/etc \
             --localstatedir=/var \
+            --libdir=/usr/lib$LIBDIRSUFFIX \
             --mandir=/usr/man \
             --enable-shared=yes \
-            --enable-static=no || exit 1
+            --enable-static=no || exit 4
 
 # Build & install
-make -j4 || exit 2 
-make DESTDIR=$PKG install || exit 3
+make -j4 || exit 5
+make DESTDIR=$PKG install || exit 6
 
 # Prepare
 bin_perms $PKG
