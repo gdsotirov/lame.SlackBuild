@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Slackware build script for LAME
-# Copyright (C) 2007,2008,2010,2012 Georgi D. Sotirov <gdsotirov@dir.bg>
+# Copyright (C) 2007-2015 Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,13 +17,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: lame.SlackBuild,v 1.5 2012/02/19 08:48:10 gsotirov Exp $
+# $Id: lame.SlackBuild,v 1.6 2015/05/18 18:24:38 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=lame
-VERSION=3.99.4
+VERSION=3.99.5
 ARCH=${ARCH:-i486}
 BUILD=${BUILD:-1}
 
