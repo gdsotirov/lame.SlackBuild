@@ -1,0 +1,79 @@
+# Patch fo fix reconfigure with newer auto tools
+# Copyright (C) 2016 Georgi D. Sotirov <gdsotirov@dir.bg>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# Visit SlackPack at http://sotirov-bg.net/slackpack/
+#
+# $Id: lame-3.99.5.diff,v 1.1 2016/08/16 13:08:16 gsotirov Exp $
+#
+diff -urNad lame-3.99.5-orig/configure.in lame-3.99.5/configure.in
+--- lame-3.99.5-orig/configure.in	2012-02-28 20:50:27.000000000 +0200
++++ lame-3.99.5/configure.in	2016-08-16 15:13:27.000000000 +0300
+@@ -78,7 +78,7 @@
+ fi
+ 
+ dnl more automake stuff
+-AM_C_PROTOTYPES
++dnl AM_C_PROTOTYPES
+ 
+ AC_CHECK_HEADER(dmalloc.h)
+ if test "${ac_cv_header_dmalloc_h}" = "yes"; then
+diff -urNad lame-3.99.5-orig/doc/html/Makefile.am lame-3.99.5/doc/html/Makefile.am
+--- lame-3.99.5-orig/doc/html/Makefile.am	2010-09-30 23:58:40.000000000 +0300
++++ lame-3.99.5/doc/html/Makefile.am	2016-08-16 15:09:08.000000000 +0300
+@@ -1,6 +1,6 @@
+ ## $Id: lame-3.99.5.diff,v 1.1 2016/08/16 13:08:16 gsotirov Exp $
+ 
+-AUTOMAKE_OPTIONS = foreign ansi2knr
++AUTOMAKE_OPTIONS = foreign
+ 
+ docdir = $(datadir)/doc
+ pkgdocdir = $(docdir)/$(PACKAGE)
+diff -urNad lame-3.99.5-orig/doc/man/Makefile.am lame-3.99.5/doc/man/Makefile.am
+--- lame-3.99.5-orig/doc/man/Makefile.am	2000-10-22 14:39:44.000000000 +0300
++++ lame-3.99.5/doc/man/Makefile.am	2016-08-16 15:09:21.000000000 +0300
+@@ -1,6 +1,6 @@
+ ## $Id: lame-3.99.5.diff,v 1.1 2016/08/16 13:08:16 gsotirov Exp $
+ 
+-AUTOMAKE_OPTIONS = foreign ansi2knr
++AUTOMAKE_OPTIONS = foreign
+ 
+ man_MANS = lame.1
+ EXTRA_DIST = ${man_MANS}
+diff -urNad lame-3.99.5-orig/libmp3lame/i386/Makefile.am lame-3.99.5/libmp3lame/i386/Makefile.am
+--- lame-3.99.5-orig/libmp3lame/i386/Makefile.am	2011-04-04 12:42:34.000000000 +0300
++++ lame-3.99.5/libmp3lame/i386/Makefile.am	2016-08-16 15:08:56.000000000 +0300
+@@ -1,6 +1,6 @@
+ ## $Id: lame-3.99.5.diff,v 1.1 2016/08/16 13:08:16 gsotirov Exp $
+ 
+-AUTOMAKE_OPTIONS = foreign $(top_srcdir)/ansi2knr
++AUTOMAKE_OPTIONS = foreign
+ 
+ DEFS = @DEFS@ @CONFIG_DEFS@
+ 
+# Fix compilation of libmp3lame/vector/xmm_quantize_sub.c with GCC >= 4.9.0
+# See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=760047 and http://sourceforge.net/p/lame/bugs/443/
+diff -urNad lame-3.99.5-orig/libmp3lame/vector/Makefile.am lame-3.99.5/libmp3lame/vector/Makefile.am
+--- lame-3.99.5-orig/libmp3lame/vector/Makefile.am	2007-01-09 12:15:53.000000000 +0200
++++ lame-3.99.5/libmp3lame/vector/Makefile.am	2016-08-16 15:08:02.000000000 +0300
+@@ -20,6 +20,7 @@
+ 
+ if WITH_XMM
+ liblamevectorroutines_la_SOURCES = $(xmm_sources)
++liblamevectorroutines_la_CFLAGS = -msse
+ endif
+ 
+ noinst_HEADERS = lame_intrin.h
